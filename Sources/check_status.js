@@ -10,14 +10,16 @@ const octokit = new Octokit({ auth: `token ${process.env.GH_TOKEN}` });
 
 const main = async () => {
   await getGist();
-
+  console.log("end-", apps);
+  
   exec(
     "ruby Sources/fetch_app_status.rb",
     { env: env },
     function (err, stdout, stderr) {
       if (stdout) {
+        console.log("json1-");
         var apps = JSON.parse(stdout);
-        console.log(apps);
+        console.log("json2-", apps);
         for (let app of apps) {
           checkVersion(app);
         }
