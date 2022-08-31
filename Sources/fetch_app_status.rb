@@ -1,13 +1,15 @@
+# https://github.com/fastlane/fastlane/blob/master/spaceship/docs/AppStoreConnect.md
+
 require "spaceship"
 require "json"
 require 'tempfile'
 
 def get_app_state(app)
-  
-  edit_version_info = app.get_edit_app_store_version
-  in_review_version_info = app.get_in_review_app_store_version
-  pending_version_info = app.get_pending_release_app_store_version
-  latest_version_info = app.get_latest_app_store_version
+  live_version_info = app.get_live_app_store_version # the version that's currently available in the App Store  
+  edit_version_info = app.get_edit_app_store_version # the version that's in `Prepare for Submission`, `Metadata Rejected`, `Rejected`, `Developer Rejcted`, `Waiting for Review`, `Invalid Binary` mode
+  in_review_version_info = app.get_in_review_app_store_version # the version that is in `In Review` mode
+  pending_version_info = app.get_pending_release_app_store_version # the version that's in `Pending Developer Release` or `Pending Apple Release` mode
+  latest_version_info = app.get_latest_app_store_version # the version that's the latest one
   
   version_string = ""
   app_store_state = ""
@@ -27,7 +29,7 @@ def get_app_state(app)
   end
 
   icon_url = ""
-  live_version_info = app.get_live_app_store_version
+
   if live_version_info.nil? == false
     icon_url = live_version_info.build.icon_asset_token["templateUrl"]
     icon_url["{w}"] = "340"
