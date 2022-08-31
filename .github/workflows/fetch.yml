@@ -3,7 +3,7 @@ name: Fetch Appstore Info
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 7 ? * MON-FRI"
+    - cron: "0 7 ? * MON-FRI"
 
 jobs:
   build:
