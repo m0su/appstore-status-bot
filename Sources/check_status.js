@@ -35,6 +35,7 @@ const checkVersion = async (app) => {
   var submissionStartKey = "submissionStart" + app.appID;
   console.log("1112");
   const db = dirty("store.db");
+  console.log("11163");
   db.on("load", async function () {
     console.log("1113");
     var lastAppInfo = db.get(appInfoKey);
@@ -57,6 +58,7 @@ const checkVersion = async (app) => {
       console.log("1117");
       await updateGist(data);
     } catch (error) {
+      console.log("11151");
       console.log(error);
     }
   });
