@@ -10,7 +10,7 @@ const octokit = new Octokit({ auth: `token ${process.env.GH_TOKEN}` });
 
 const main = async () => {
   await getGist();
-  console.log("end-", apps);
+  console.log("end-");
   
   exec(
     "ruby Sources/fetch_app_status.rb",
