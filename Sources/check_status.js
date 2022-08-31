@@ -19,9 +19,7 @@ const main = async () => {
         var apps = JSON.parse(stdout);
         console.log(apps);
         for (let app of apps) {
-          console.log("111");
           checkVersion(app);
-          console.log("1112");
         }
       } else {
         console.log("There was a problem fetching the status of the app!");
@@ -32,12 +30,15 @@ const main = async () => {
 };
 
 const checkVersion = async (app) => {
+  console.log("111");
   var appInfoKey = "appInfo-" + app.appID;
   var submissionStartKey = "submissionStart" + app.appID;
-
+  console.log("1112");
   const db = dirty("store.db");
   db.on("load", async function () {
+    console.log("1113");
     var lastAppInfo = db.get(appInfoKey);
+    console.log("1114");
     if (!lastAppInfo || lastAppInfo.status != app.status) {
       console.log("[*] status is different");
       slack.post(app, db.get(submissionStartKey));
@@ -48,11 +49,12 @@ const checkVersion = async (app) => {
     } else {
       console.log("[*] status is same");
     }
-
+    console.log("1115");
     db.set(appInfoKey, app);
-
+    console.log("1116");
     try {
       const data = await fs.readFile("store.db", "utf-8");
+      console.log("1117");
       await updateGist(data);
     } catch (error) {
       console.log(error);
@@ -92,6 +94,7 @@ const updateGist = async (content) => {
     .catch((error) => console.error(`[*] Unable to update gist\n${error}`));
   if (!gist) return;
 
+  console.log("2114");
   const filename = Object.keys(gist.data.files)[0];
   await octokit.rest.gists.update({
     gist_id: process.env.GIST_ID,
